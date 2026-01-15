@@ -1,0 +1,21 @@
+<h1>My <%= @list.name %> List</h1>
+
+<% if @list.bookmarks.any? %>
+  <ul>
+    <% @list.bookmarks.each do |bookmark| %>
+      <li>
+        <%= image_tag bookmark.movie.poster_url, width: 80 %>
+        <%= bookmark.movie.title %> - <%= bookmark.comment %>
+        <%= link_to "Remove", list_bookmark_path(@list, bookmark),
+                    method: :delete,
+                    data: { confirm: "Are you sure?" },
+                    class: "btn btn-danger btn-sm" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No movies yet in this list 😢</p>
+<% end %>
+
+<%= link_to "Add movie", new_list_bookmark_path(@list), class: "btn btn-primary mt-3" %>
+<%= link_to "Back", lists_path, class: "btn btn-secondary" %>
